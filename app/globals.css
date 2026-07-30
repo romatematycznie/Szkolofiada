@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --kolor-niebieski: #0085C7;
+  --kolor-zolty: #F4C300;
+  --kolor-czarny: #000000;
+  --kolor-zielony: #009F3D;
+  --kolor-czerwony: #DF0024;
+  --kolor-tlo: #ffffff;
+}
+
+body {
+  background-color: var(--kolor-tlo);
+  color: #111111;
+}
