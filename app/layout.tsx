@@ -18,7 +18,7 @@ export default function RootLayout({
           <a href="/" className="text-xl font-bold tracking-wide">⭕ Szkolofiada</a>
           <div className="flex flex-wrap gap-4 text-sm font-medium">
             <a href="/" className="hover:underline">Strona główna</a>
-            <a href="/o-szkolofiadzie" className="hover:underline">O Szkołofiadzie</a>
+            <a href="/o-szkolofiadzie" className="hover:underline">O Szkolofiadzie</a>
             <a href="/igrzyska" className="hover:underline">Igrzyska</a>
             <a href="/dyscypliny" className="hover:underline">Dyscypliny</a>
             <a href="/uczestnicy" className="hover:underline">Uczestnicy</a>
