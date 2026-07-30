@@ -14,18 +14,18 @@ export default function RootLayout({
   return (
     <html lang="pl">
       <body>
-        <nav style={{ backgroundColor: "var(--kolor-niebieski)" }} className="text-white px-6 py-4 flex flex-wrap gap-4 items-center justify-between">
-          <a href="/" className="text-xl font-bold tracking-wide">⭕ Szkolofiada</a>
-          <div className="flex flex-wrap gap-4 text-sm font-medium">
-            <a href="/" className="hover:underline">Strona główna</a>
-            <a href="/o-szkolofiadzie" className="hover:underline">O Szkolofiadzie</a>
-            <a href="/igrzyska" className="hover:underline">Igrzyska</a>
-            <a href="/dyscypliny" className="hover:underline">Dyscypliny</a>
-            <a href="/uczestnicy" className="hover:underline">Uczestnicy</a>
-            <a href="/organizacja" className="hover:underline">Organizacja</a>
-            <a href="/symbole" className="hover:underline">Symbole</a>
-            <a href="/medale" className="hover:underline">Medale</a>
-            <a href="/kontakt" className="hover:underline">Kontakt</a>
+        <nav style={{ backgroundColor: "#1a1a2e" }} className="px-6 py-4 flex flex-wrap gap-3 items-center justify-between">
+          <a href="/" className="text-xl font-bold tracking-wide text-white">⭕ Szkolofiada</a>
+          <div className="flex flex-wrap gap-2">
+            <a href="/" className="px-4 py-2 rounded-full text-sm font-semibold text-white" style={{ backgroundColor: "var(--kolor-niebieski)" }}>Strona główna</a>
+            <a href="/o-szkolofiadzie" className="px-4 py-2 rounded-full text-sm font-semibold text-white" style={{ backgroundColor: "var(--kolor-zielony)" }}>O Szkolofiadzie</a>
+            <a href="/igrzyska" className="px-4 py-2 rounded-full text-sm font-semibold text-white" style={{ backgroundColor: "var(--kolor-czerwony)" }}>Igrzyska</a>
+            <a href="/dyscypliny" className="px-4 py-2 rounded-full text-sm font-semibold text-black" style={{ backgroundColor: "var(--kolor-zolty)" }}>Dyscypliny</a>
+            <a href="/uczestnicy" className="px-4 py-2 rounded-full text-sm font-semibold text-white" style={{ backgroundColor: "var(--kolor-niebieski)" }}>Uczestnicy</a>
+            <a href="/organizacja" className="px-4 py-2 rounded-full text-sm font-semibold text-white" style={{ backgroundColor: "var(--kolor-zielony)" }}>Organizacja</a>
+            <a href="/symbole" className="px-4 py-2 rounded-full text-sm font-semibold text-white" style={{ backgroundColor: "var(--kolor-czerwony)" }}>Symbole</a>
+            <a href="/medale" className="px-4 py-2 rounded-full text-sm font-semibold text-black" style={{ backgroundColor: "var(--kolor-zolty)" }}>Medale</a>
+            <a href="/kontakt" className="px-4 py-2 rounded-full text-sm font-semibold text-white" style={{ backgroundColor: "var(--kolor-niebieski)" }}>Kontakt</a>
           </div>
         </nav>
         <main>{children}</main>
