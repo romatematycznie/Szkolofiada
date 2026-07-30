@@ -14,9 +14,9 @@ export default function RootLayout({
   return (
     <html lang="pl">
       <body>
-        <nav style={{ backgroundColor: "#1a1a2e" }} className="px-6 py-4 flex flex-wrap gap-3 items-center justify-between">
+        <nav style={{ backgroundColor: "#1a1a2e" }} className="px-6 py-4 flex flex-col items-center gap-3">
           <a href="/" className="text-xl font-bold tracking-wide text-white">⭕ Szkolofiada</a>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap justify-center gap-2">
             <a href="/" className="px-4 py-2 rounded-full text-sm font-semibold text-white" style={{ backgroundColor: "var(--kolor-niebieski)" }}>Strona główna</a>
             <a href="/o-szkolofiadzie" className="px-4 py-2 rounded-full text-sm font-semibold text-white" style={{ backgroundColor: "var(--kolor-zielony)" }}>O Szkolofiadzie</a>
             <a href="/igrzyska" className="px-4 py-2 rounded-full text-sm font-semibold text-white" style={{ backgroundColor: "var(--kolor-czerwony)" }}>Igrzyska</a>
