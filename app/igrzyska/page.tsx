@@ -6,7 +6,7 @@ export default function Igrzyska() {
       <section className="mb-12">
         <h2 className="text-2xl font-bold mb-4">Historia edycji</h2>
         <p className="text-gray-700 leading-relaxed mb-4">
-          Szkolofiada oznacza okres czterech kolejnych lat kalendarzowych. Szkolofiady są numerowane kolejno od pierwszych Igrzysk Szkolofiady, które miały odbuyć się w Toruniu i Bydgoszczy w 2023 roku.
+          Szkolofiada oznacza okres czterech kolejnych lat kalendarzowych. Szkolofiady są numerowane kolejno od pierwszych Igrzysk Szkolofiady, które miały odbyć się w Toruniu i Bydgoszczy w 2023 roku.
         </p>
         <p className="text-gray-700 leading-relaxed mb-4">
           Kolejne igrzyska szkolne odbywają się cyklicznie co 2 lata, w rok po olimpiadzie — w latach nieparzystych, aż do piątej edycji, po tym co cztery lata.
