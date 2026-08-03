@@ -26,7 +26,7 @@ export default function Igrzyska() {
           </div>
           <div className="p-6 rounded-xl border-l-4" style={{ borderColor: "var(--kolor-czerwony)", backgroundColor: "#fff1f2" }}>
             <h3 className="font-bold mb-2">🏠 Siedziba</h3>
-            <p className="text-gray-700">Stary Toruń, ul. Prosta 8</p>
+            <p className="text-gray-700">60-175 Poznań ul.Szarotkowa 91A</p>
           </div>
           <div className="p-6 rounded-xl border-l-4" style={{ borderColor: "var(--kolor-zolty)", backgroundColor: "#fefce8" }}>
             <h3 className="font-bold mb-2">👤 Organizator</h3>
