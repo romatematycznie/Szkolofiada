@@ -47,7 +47,7 @@ export default function Igrzyska() {
             <p className="text-gray-700">Poznań i Skórzewo</p>
           </div>
           <div className="p-6 rounded-xl border-l-4" style={{ borderColor: "var(--kolor-czerwony)", backgroundColor: "#fff1f2" }}>
-            <h3 className="font-bold mb-2">🏠 Siedziba - zmiana od 26 czerwca 2025 roku na </h3>
+            <h3 className="font-bold mb-2">🏠 Siedziba - zmiana od 26 czerwca 2025 roku</h3>
             <p className="text-gray-700">60-175 Poznań ul.Szarotkowa 91A</p>
           </div>
           <div className="p-6 rounded-xl border-l-4" style={{ borderColor: "var(--kolor-zolty)", backgroundColor: "#fefce8" }}>
