@@ -14,7 +14,7 @@ export default function Igrzyska() {
       </section>
 
       <section className="mb-12">
-        <h2 className="text-2xl font-bold mb-4">Pierwsza edycja</h2>
+        <h2 className="text-2xl font-bold mb-4">Planowana pierwsza edycja</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="p-6 rounded-xl border-l-4" style={{ borderColor: "var(--kolor-zielony)", backgroundColor: "#f0fdf4" }}>
             <h3 className="font-bold mb-2">📅 Termin</h3>
@@ -23,6 +23,28 @@ export default function Igrzyska() {
           <div className="p-6 rounded-xl border-l-4" style={{ borderColor: "var(--kolor-niebieski)", backgroundColor: "#eff6ff" }}>
             <h3 className="font-bold mb-2">📍 Miejsca</h3>
             <p className="text-gray-700">Toruń i Bydgoszcz</p>
+          </div>
+          <div className="p-6 rounded-xl border-l-4" style={{ borderColor: "var(--kolor-czerwony)", backgroundColor: "#fff1f2" }}>
+            <h3 className="font-bold mb-2">🏠 Siedziba (poprzednia) </h3>
+            <p className="text-gray-700">87-134 Stary Toruń ul.Prosta 8</p>
+          </div>
+          <div className="p-6 rounded-xl border-l-4" style={{ borderColor: "var(--kolor-zolty)", backgroundColor: "#fefce8" }}>
+            <h3 className="font-bold mb-2">👤 Organizator</h3>
+            <p className="text-gray-700">Dominik Mołdoch — Prezydent Szkolofiady</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="mb-12">
+        <h2 className="text-2xl font-bold mb-4">Prawdziwa pierwsza edycja</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-6 rounded-xl border-l-4" style={{ borderColor: "var(--kolor-zielony)", backgroundColor: "#f0fdf4" }}>
+            <h3 className="font-bold mb-2">📅 Termin</h3>
+            <p className="text-gray-700">1–14 sierpnia 2027 roku</p>
+          </div>
+          <div className="p-6 rounded-xl border-l-4" style={{ borderColor: "var(--kolor-niebieski)", backgroundColor: "#eff6ff" }}>
+            <h3 className="font-bold mb-2">📍 Miejsca</h3>
+            <p className="text-gray-700">Poznań i Skórzewo</p>
           </div>
           <div className="p-6 rounded-xl border-l-4" style={{ borderColor: "var(--kolor-czerwony)", backgroundColor: "#fff1f2" }}>
             <h3 className="font-bold mb-2">🏠 Siedziba - zmiana od 26 czerwca 2025 roku na </h3>
@@ -35,6 +57,8 @@ export default function Igrzyska() {
         </div>
       </section>
 
+
+      
       <section className="mb-12">
         <h2 className="text-2xl font-bold mb-4">Wioska Szkolofijska</h2>
         <p className="text-gray-700 leading-relaxed">
