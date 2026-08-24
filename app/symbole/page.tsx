@@ -50,6 +50,14 @@ export default function Symbole() {
 /* ---------------------------------------------------------
    Koła Szkolofijskie z animowanymi buźkami dzieci
    --------------------------------------------------------- */
+type DzieckoTyp = {
+  skora: string;
+  wlosy: string;
+  fryzura: "kucyki" | "afro" | "krotkie" | "grzywka" | "kok";
+  akcent: string;
+  oczy?: "skosne" | "okragle";
+};
+
 function KolaSzkolofijskie() {
   const r = 70; // promień pierścienia
   const grubosc = 13; // grubość obwódki pierścienia
@@ -66,7 +74,7 @@ function KolaSzkolofijskie() {
     { cx: 325, cy: 175, kolor: "#009F3D" },
   ];
 
-  const dzieci = [
+  const dzieci: DzieckoTyp[] = [
     { skora: "#F6C9A0", wlosy: "#7A4A2B", fryzura: "kucyki", akcent: "#E8734A" },
     { skora: "#8D5A34", wlosy: "#1A1A1A", fryzura: "afro", akcent: "#2E86AB" },
     { skora: "#EFC29B", wlosy: "#C94F3B", fryzura: "krotkie", akcent: "#F4A300" },
@@ -119,7 +127,19 @@ function KolaSzkolofijskie() {
   );
 }
 
-function Buzia({ cx, cy, r, dziecko, opoznienie }) {
+function Buzia({
+  cx,
+  cy,
+  r,
+  dziecko,
+  opoznienie,
+}: {
+  cx: number;
+  cy: number;
+  r: number;
+  dziecko: DzieckoTyp;
+  opoznienie: number;
+}) {
   const { skora, wlosy, fryzura, akcent, oczy } = dziecko;
 
   return (
