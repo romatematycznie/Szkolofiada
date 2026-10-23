@@ -17,9 +17,14 @@ export default function Symbole() {
 
       <section className="mb-12">
         <h2 className="text-2xl font-bold mb-4">Flaga Szkolofijska</h2>
-        <p className="text-gray-700 leading-relaxed">
-          Flaga Szkolofijska ma białe tło bez obramowania. W jej centralnym punkcie znajduje się symbol Szkolofijski w pięciu kolorach.
-        </p>
+        <div className="p-6 rounded-xl bg-gray-50 mb-4">
+          <div className="flex justify-center mb-4">
+            <FlagaSzkolofijska />
+          </div>
+          <p className="text-gray-700 leading-relaxed text-center">
+            Flaga Szkolofijska ma białe tło bez obramowania. W jej centralnym punkcie znajduje się symbol Szkolofijski w pięciu kolorach.
+          </p>
+        </div>
       </section>
 
       <section className="mb-12">
@@ -49,6 +54,8 @@ export default function Symbole() {
 
 /* ---------------------------------------------------------
    Koła Szkolofijskie z animowanymi buźkami dzieci
+   (treść symbolu wydzielona do SymbolZawartosc, żeby dokładnie
+   ten sam symbol można było ponownie użyć na fladze)
    --------------------------------------------------------- */
 type DzieckoTyp = {
   skora: string;
@@ -58,7 +65,10 @@ type DzieckoTyp = {
   oczy?: "skosne" | "okragle";
 };
 
-function KolaSzkolofijskie() {
+const SYMBOL_SZEROKOSC = 500;
+const SYMBOL_WYSOKOSC = 260;
+
+function SymbolZawartosc() {
   const r = 70; // promień pierścienia
   const grubosc = 13; // grubość obwódki pierścienia
 
@@ -85,12 +95,7 @@ function KolaSzkolofijskie() {
   const pierscienie = [...gorny, ...dolny];
 
   return (
-    <svg
-      viewBox="0 0 500 260"
-      width="100%"
-      style={{ maxWidth: 520 }}
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <>
       <style>{`
         @keyframes szk-mrugniecie {
           0%, 88%, 100% { transform: scaleY(1); }
@@ -123,6 +128,19 @@ function KolaSzkolofijskie() {
           opoznienie={i * 0.35}
         />
       ))}
+    </>
+  );
+}
+
+function KolaSzkolofijskie() {
+  return (
+    <svg
+      viewBox={`0 0 ${SYMBOL_SZEROKOSC} ${SYMBOL_WYSOKOSC}`}
+      width="100%"
+      style={{ maxWidth: 520 }}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <SymbolZawartosc />
     </svg>
   );
 }
@@ -222,5 +240,95 @@ function Buzia({
       {/* mały akcent - wstążka/opaska w kolorze pierścienia dziecka */}
       <circle cx={cx} cy={cy - r * 0.85} r={r * 0.06} fill={akcent} />
     </g>
+  );
+}
+
+/* ---------------------------------------------------------
+   Flaga Szkolofijska - powiewa na wietrze
+   Biały prostokąt z dokładnie tym samym symbolem co wyżej,
+   zamocowany do masztu. Falowanie tkaniny: filtr SVG
+   (feTurbulence + feDisplacementMap) animowany przez <animate>,
+   plus delikatne kołysanie całej flagi (CSS) dla efektu podmuchów.
+   --------------------------------------------------------- */
+const FLAGA_MARGINES = 20;
+const FLAGA_X = 24;
+const FLAGA_Y = FLAGA_MARGINES;
+const FLAGA_SZEROKOSC = SYMBOL_SZEROKOSC;
+const FLAGA_WYSOKOSC = SYMBOL_WYSOKOSC;
+const FLAGA_VIEWBOX_SZER = FLAGA_X + FLAGA_SZEROKOSC + FLAGA_MARGINES;
+const FLAGA_VIEWBOX_WYS = FLAGA_Y + FLAGA_WYSOKOSC + FLAGA_MARGINES;
+
+function FlagaSzkolofijska() {
+  return (
+    <svg
+      viewBox={`0 0 ${FLAGA_VIEWBOX_SZER} ${FLAGA_VIEWBOX_WYS}`}
+      width="100%"
+      style={{ maxWidth: 560 }}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <style>{`
+        @keyframes szk-powiew-flagi {
+          0%, 100% { transform: rotate(0deg) skewY(0deg); }
+          25% { transform: rotate(-1.6deg) skewY(-0.6deg); }
+          50% { transform: rotate(0.6deg) skewY(0.4deg); }
+          75% { transform: rotate(-0.8deg) skewY(-0.3deg); }
+        }
+        .szk-flaga-tkanina {
+          transform-box: fill-box;
+          transform-origin: left center;
+          animation: szk-powiew-flagi 4.8s ease-in-out infinite;
+        }
+      `}</style>
+
+      <defs>
+        <filter id="szk-wiatr" x="-20%" y="-30%" width="140%" height="160%">
+          <feTurbulence
+            type="turbulence"
+            baseFrequency="0.012 0.035"
+            numOctaves={2}
+            seed={4}
+            result="szk-turbulencja"
+          >
+            <animate
+              attributeName="baseFrequency"
+              dur="7s"
+              values="0.012 0.035;0.022 0.05;0.012 0.035"
+              repeatCount="indefinite"
+            />
+          </feTurbulence>
+          <feDisplacementMap
+            in="SourceGraphic"
+            in2="szk-turbulencja"
+            scale="16"
+            xChannelSelector="R"
+            yChannelSelector="G"
+          />
+        </filter>
+      </defs>
+
+      {/* maszt */}
+      <rect x="4" y="6" width="12" height={FLAGA_VIEWBOX_WYS - 12} rx="4" fill="#8a5a33" />
+      <circle cx="10" cy="10" r="12" fill="#d8b25c" stroke="#a9802f" strokeWidth="1.5" />
+      {/* uchwyty mocujące flagę do masztu (statyczne) */}
+      <circle cx="12" cy={FLAGA_Y + 20} r="4" fill="#a9802f" />
+      <circle cx="12" cy={FLAGA_Y + FLAGA_WYSOKOSC / 2} r="4" fill="#a9802f" />
+      <circle cx="12" cy={FLAGA_Y + FLAGA_WYSOKOSC - 20} r="4" fill="#a9802f" />
+
+      {/* tkanina flagi - podlega falowaniu */}
+      <g className="szk-flaga-tkanina" filter="url(#szk-wiatr)">
+        <rect
+          x={FLAGA_X}
+          y={FLAGA_Y}
+          width={FLAGA_SZEROKOSC}
+          height={FLAGA_WYSOKOSC}
+          fill="#ffffff"
+          stroke="#e4e4e4"
+          strokeWidth="1"
+        />
+        <g transform={`translate(${FLAGA_X}, ${FLAGA_Y})`}>
+          <SymbolZawartosc />
+        </g>
+      </g>
+    </svg>
   );
 }
