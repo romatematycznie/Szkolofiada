@@ -1,5 +1,3 @@
-import type { CSSProperties } from "react";
-
 export default function Symbole() {
   return (
     <div className="max-w-4xl mx-auto px-6 py-16">
@@ -296,24 +294,6 @@ function FlagaSzkolofijska() {
       style={{ maxWidth: 560 }}
       xmlns="http://www.w3.org/2000/svg"
     >
-      <style>{`
-        @keyframes szk-fala-pasek {
-          0%, 100% { transform: translateY(calc(var(--szk-amp) * -1)); }
-          50% { transform: translateY(var(--szk-amp)); }
-        }
-        .szk-pasek {
-          animation-name: szk-fala-pasek;
-          animation-duration: 2.6s;
-          animation-timing-function: ease-in-out;
-          animation-iteration-count: infinite;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .szk-pasek {
-            animation: none !important;
-          }
-        }
-      `}</style>
-
       <defs>
         {/* pojedyncza definicja flagi (tło + symbol), wielokrotnie użyta przez <use> w każdym pasie */}
         <g id="szk-flaga-rysunek">
@@ -348,20 +328,24 @@ function FlagaSzkolofijska() {
       <circle cx="13" cy={FLAGA_Y + FLAGA_WYSOKOSC / 2} r="4" fill="#a9802f" />
       <circle cx="13" cy={FLAGA_Y + FLAGA_WYSOKOSC - 20} r="4" fill="#a9802f" />
 
-      {/* tkanina flagi pocięta na pasy, każdy łopocze z inną amplitudą i fazą */}
+      {/* tkanina flagi pocięta na pasy, każdy łopocze z inną amplitudą i fazą
+          (animacja natywnym SVG animateTransform zamiast CSS transform,
+          żeby uniknąć pikselizacji przy łączeniu clip-path z animacją CSS) */}
       {paski.map((p) => (
-        <g
-          key={p.i}
-          clipPath={`url(#szk-pasek-clip-${p.i})`}
-          className="szk-pasek"
-          style={
-            {
-              "--szk-amp": `${p.amplituda}px`,
-              animationDelay: `${p.opoznienie}s`,
-            } as CSSProperties
-          }
-        >
-          <use href="#szk-flaga-rysunek" />
+        <g key={p.i} clipPath={`url(#szk-pasek-clip-${p.i})`}>
+          <use href="#szk-flaga-rysunek">
+            <animateTransform
+              attributeName="transform"
+              type="translate"
+              values={`0 -${p.amplituda}; 0 ${p.amplituda}; 0 -${p.amplituda}`}
+              keyTimes="0; 0.5; 1"
+              calcMode="spline"
+              keySplines="0.42 0 0.58 1; 0.42 0 0.58 1"
+              dur="2.6s"
+              begin={`${p.opoznienie}s`}
+              repeatCount="indefinite"
+            />
+          </use>
         </g>
       ))}
     </svg>
