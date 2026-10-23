@@ -69,10 +69,10 @@ export default function Medale() {
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-16">
-      <h1 className="text-4xl font-bold mb-8" style={{ color: "var(--kolor-zolty)" }}>Medale i nagrody</h1>
+      <h1 className="text-4xl font-bold mb-2" style={{ color: "var(--kolor-zolty)" }}>Medale i nagrody</h1>
 
       <section className="mb-12">
-        <div className="podium-wrapper relative flex items-end justify-center gap-4 sm:gap-8 pt-8">
+        <div className="podium-wrapper relative flex items-end justify-center gap-4 sm:gap-8 pt-0">
           <div className="podium-spotlight" aria-hidden="true" />
 
           {kolejnoscPodium.map((m) => (
