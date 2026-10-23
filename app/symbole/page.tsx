@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 export default function Symbole() {
   return (
     <div className="max-w-4xl mx-auto px-6 py-16">
@@ -245,12 +247,20 @@ function Buzia({
 
 /* ---------------------------------------------------------
    Flaga Szkolofijska - powiewa na wietrze
-   Biały prostokąt z dokładnie tym samym symbolem co wyżej,
-   zamocowany do masztu. Falowanie tkaniny: filtr SVG
-   (feTurbulence + feDisplacementMap) animowany przez <animate>,
-   plus delikatne kołysanie całej flagi (CSS) dla efektu podmuchów.
+   Biały prostokąt (bez obramowania) z dokładnie tym samym
+   symbolem co wyżej, zamocowany do masztu.
+
+   Falowanie tkaniny uzyskujemy dzieląc flagę na wąskie,
+   pionowe pasy. Każdy pas to ten sam rysunek flagi, ale
+   wycięty (clipPath) do swojej kolumny i przesuwany w pionie
+   własną animacją CSS. Amplituda ruchu rośnie od masztu
+   (prawie bez ruchu - tkanina jest tam przyszyta) do wolnego,
+   prawego brzegu (najsilniejszy łopot), a kolejne pasy mają
+   przesunięte opóźnienie animacji, dzięki czemu fala wyraźnie
+   "biegnie" wzdłuż flagi - tak jak w prawdziwym wietrze,
+   zamiast rozmywać cały rysunek jak pod wodą.
    --------------------------------------------------------- */
-const FLAGA_MARGINES = 20;
+const FLAGA_MARGINES = 24;
 const FLAGA_X = 24;
 const FLAGA_Y = FLAGA_MARGINES;
 const FLAGA_SZEROKOSC = SYMBOL_SZEROKOSC;
@@ -258,7 +268,27 @@ const FLAGA_WYSOKOSC = SYMBOL_WYSOKOSC;
 const FLAGA_VIEWBOX_SZER = FLAGA_X + FLAGA_SZEROKOSC + FLAGA_MARGINES;
 const FLAGA_VIEWBOX_WYS = FLAGA_Y + FLAGA_WYSOKOSC + FLAGA_MARGINES;
 
+const FLAGA_LICZBA_PASKOW = 14;
+const FLAGA_PASEK_SZEROKOSC = FLAGA_SZEROKOSC / FLAGA_LICZBA_PASKOW;
+const FLAGA_AMPLITUDA_MIN = 1.5; // px, przy maszcie - tkanina usztywniona
+const FLAGA_AMPLITUDA_MAX = 13; // px, na wolnym brzegu - najmocniejszy łopot
+const FLAGA_NADDATEK = Math.ceil(FLAGA_AMPLITUDA_MAX); // margines rysunku, by nie było prześwitów przy ruchu
+
 function FlagaSzkolofijska() {
+  const paski = Array.from({ length: FLAGA_LICZBA_PASKOW }, (_, i) => {
+    const postep = FLAGA_LICZBA_PASKOW === 1 ? 1 : i / (FLAGA_LICZBA_PASKOW - 1);
+    const amplituda = FLAGA_AMPLITUDA_MIN + (FLAGA_AMPLITUDA_MAX - FLAGA_AMPLITUDA_MIN) * postep;
+    return {
+      i,
+      x: FLAGA_X + i * FLAGA_PASEK_SZEROKOSC,
+      amplituda,
+      opoznienie: i * 0.09,
+    };
+  });
+
+  const rectY = FLAGA_Y - FLAGA_NADDATEK;
+  const rectH = FLAGA_WYSOKOSC + FLAGA_NADDATEK * 2;
+
   return (
     <svg
       viewBox={`0 0 ${FLAGA_VIEWBOX_SZER} ${FLAGA_VIEWBOX_WYS}`}
@@ -267,43 +297,37 @@ function FlagaSzkolofijska() {
       xmlns="http://www.w3.org/2000/svg"
     >
       <style>{`
-        @keyframes szk-powiew-flagi {
-          0%, 100% { transform: rotate(0deg) skewY(0deg); }
-          25% { transform: rotate(-1.6deg) skewY(-0.6deg); }
-          50% { transform: rotate(0.6deg) skewY(0.4deg); }
-          75% { transform: rotate(-0.8deg) skewY(-0.3deg); }
+        @keyframes szk-fala-pasek {
+          0%, 100% { transform: translateY(calc(var(--szk-amp) * -1)); }
+          50% { transform: translateY(var(--szk-amp)); }
         }
-        .szk-flaga-tkanina {
-          transform-box: fill-box;
-          transform-origin: left center;
-          animation: szk-powiew-flagi 4.8s ease-in-out infinite;
+        .szk-pasek {
+          animation-name: szk-fala-pasek;
+          animation-duration: 2.6s;
+          animation-timing-function: ease-in-out;
+          animation-iteration-count: infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .szk-pasek {
+            animation: none !important;
+          }
         }
       `}</style>
 
       <defs>
-        <filter id="szk-wiatr" x="-20%" y="-30%" width="140%" height="160%">
-          <feTurbulence
-            type="turbulence"
-            baseFrequency="0.012 0.035"
-            numOctaves={2}
-            seed={4}
-            result="szk-turbulencja"
-          >
-            <animate
-              attributeName="baseFrequency"
-              dur="7s"
-              values="0.012 0.035;0.022 0.05;0.012 0.035"
-              repeatCount="indefinite"
-            />
-          </feTurbulence>
-          <feDisplacementMap
-            in="SourceGraphic"
-            in2="szk-turbulencja"
-            scale="16"
-            xChannelSelector="R"
-            yChannelSelector="G"
-          />
-        </filter>
+        {/* pojedyncza definicja flagi (tło + symbol), wielokrotnie użyta przez <use> w każdym pasie */}
+        <g id="szk-flaga-rysunek">
+          <rect x={FLAGA_X} y={rectY} width={FLAGA_SZEROKOSC} height={rectH} fill="#ffffff" />
+          <g transform={`translate(${FLAGA_X}, ${FLAGA_Y})`}>
+            <SymbolZawartosc />
+          </g>
+        </g>
+
+        {paski.map((p) => (
+          <clipPath key={p.i} id={`szk-pasek-clip-${p.i}`}>
+            <rect x={p.x} y={rectY} width={FLAGA_PASEK_SZEROKOSC + 0.5} height={rectH} />
+          </clipPath>
+        ))}
       </defs>
 
       {/* maszt */}
@@ -314,21 +338,22 @@ function FlagaSzkolofijska() {
       <circle cx="12" cy={FLAGA_Y + FLAGA_WYSOKOSC / 2} r="4" fill="#a9802f" />
       <circle cx="12" cy={FLAGA_Y + FLAGA_WYSOKOSC - 20} r="4" fill="#a9802f" />
 
-      {/* tkanina flagi - podlega falowaniu */}
-      <g className="szk-flaga-tkanina" filter="url(#szk-wiatr)">
-        <rect
-          x={FLAGA_X}
-          y={FLAGA_Y}
-          width={FLAGA_SZEROKOSC}
-          height={FLAGA_WYSOKOSC}
-          fill="#ffffff"
-          stroke="#e4e4e4"
-          strokeWidth="1"
-        />
-        <g transform={`translate(${FLAGA_X}, ${FLAGA_Y})`}>
-          <SymbolZawartosc />
+      {/* tkanina flagi pocięta na pasy, każdy łopocze z inną amplitudą i fazą */}
+      {paski.map((p) => (
+        <g
+          key={p.i}
+          clipPath={`url(#szk-pasek-clip-${p.i})`}
+          className="szk-pasek"
+          style={
+            {
+              "--szk-amp": `${p.amplituda}px`,
+              animationDelay: `${p.opoznienie}s`,
+            } as CSSProperties
+          }
+        >
+          <use href="#szk-flaga-rysunek" />
         </g>
-      </g>
+      ))}
     </svg>
   );
 }
