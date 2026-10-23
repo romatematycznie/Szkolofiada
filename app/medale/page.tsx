@@ -1,3 +1,5 @@
+"use client";
+
 export default function Medale() {
   const biegi = [
     { nazwa: "Bieg na 100m", zawodnicy: 2 },
