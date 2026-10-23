@@ -23,28 +23,60 @@ export default function Medale() {
     { nazwa: "Pchnięcie kulą", zawodnicy: 1 },
   ];
 
+  const medale = [
+    {
+      miejsce: "I miejsce",
+      opis: "Złoty medal",
+      nagroda: "2 000 zł",
+      src: "/images/medale/zloty.png",
+      alt: "Złoty medal Szkolofiady 2027",
+      delay: "0ms",
+    },
+    {
+      miejsce: "II miejsce",
+      opis: "Srebrny medal",
+      nagroda: null,
+      src: "/images/medale/srebrny.png",
+      alt: "Srebrny medal Szkolofiady 2027",
+      delay: "150ms",
+    },
+    {
+      miejsce: "III miejsce",
+      opis: "Brązowy medal",
+      nagroda: null,
+      src: "/images/medale/brazowy.png",
+      alt: "Brązowy medal Szkolofiady 2027",
+      delay: "300ms",
+    },
+  ];
+
   return (
     <div className="max-w-4xl mx-auto px-6 py-16">
       <h1 className="text-4xl font-bold mb-8" style={{ color: "var(--kolor-zolty)" }}>Medale i nagrody</h1>
 
       <section className="mb-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="p-6 rounded-xl text-center shadow-md" style={{ backgroundColor: "#FFD700" }}>
-            <p className="text-4xl mb-2">🥇</p>
-            <p className="font-bold text-xl">I miejsce</p>
-            <p className="text-gray-700 font-bold text-lg mt-1">2 000 zł</p>
-            <p className="text-gray-600 text-sm">Złoty medal</p>
-          </div>
-          <div className="p-6 rounded-xl text-center shadow-md" style={{ backgroundColor: "#C0C0C0" }}>
-            <p className="text-4xl mb-2">🥈</p>
-            <p className="font-bold text-xl">II miejsce</p>
-            <p className="text-gray-700 font-bold text-lg mt-1">Srebrny medal</p>
-          </div>
-          <div className="p-6 rounded-xl text-center shadow-md" style={{ backgroundColor: "#CD7F32", color: "white" }}>
-            <p className="text-4xl mb-2">🥉</p>
-            <p className="font-bold text-xl">III miejsce</p>
-            <p className="font-bold text-lg mt-1">Brązowy medal</p>
-          </div>
+          {medale.map((m, i) => (
+            <div
+              key={i}
+              className="medal-card p-6 rounded-xl text-center shadow-md bg-white flex flex-col items-center"
+              style={{ animationDelay: m.delay }}
+            >
+              <div className="medal-image-wrap w-32 h-32 mb-4 relative">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={m.src}
+                  alt={m.alt}
+                  className="medal-image w-full h-full object-contain drop-shadow-lg"
+                />
+              </div>
+              <p className="font-bold text-xl">{m.miejsce}</p>
+              {m.nagroda && (
+                <p className="text-gray-700 font-bold text-lg mt-1">{m.nagroda}</p>
+              )}
+              <p className="text-gray-600 text-sm mt-1">{m.opis}</p>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -69,6 +101,93 @@ export default function Medale() {
           </table>
         </div>
       </section>
+
+      <style jsx>{`
+        @keyframes medalEntrance {
+          0% {
+            opacity: 0;
+            transform: translateY(24px) scale(0.92);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        @keyframes medalFloat {
+          0%,
+          100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-6px);
+          }
+        }
+
+        @keyframes medalShine {
+          0% {
+            transform: translateX(-120%) rotate(20deg);
+          }
+          100% {
+            transform: translateX(220%) rotate(20deg);
+          }
+        }
+
+        .medal-card {
+          opacity: 0;
+          animation: medalEntrance 0.6s ease-out forwards;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .medal-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .medal-image-wrap {
+          overflow: hidden;
+          animation: medalFloat 3.2s ease-in-out infinite;
+        }
+
+        .medal-image {
+          transition: transform 0.4s ease;
+        }
+
+        .medal-card:hover .medal-image {
+          transform: scale(1.08) rotate(-4deg);
+        }
+
+        .medal-image-wrap::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            120deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.55) 50%,
+            transparent 100%
+          );
+          transform: translateX(-120%) rotate(20deg);
+          pointer-events: none;
+        }
+
+        .medal-card:hover .medal-image-wrap::after {
+          animation: medalShine 0.9s ease forwards;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .medal-card,
+          .medal-image-wrap,
+          .medal-image {
+            animation: none !important;
+            transition: none !important;
+          }
+          .medal-card {
+            opacity: 1;
+            transform: none;
+          }
+        }
+      `}</style>
     </div>
   );
 }
