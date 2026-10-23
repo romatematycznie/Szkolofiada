@@ -321,6 +321,16 @@ function FlagaSzkolofijska() {
           <g transform={`translate(${FLAGA_X}, ${FLAGA_Y})`}>
             <SymbolZawartosc />
           </g>
+          {/* obrys flagi - część wspólnej definicji, więc faluje razem z resztą w każdym pasie */}
+          <rect
+            x={FLAGA_X}
+            y={FLAGA_Y}
+            width={FLAGA_SZEROKOSC}
+            height={FLAGA_WYSOKOSC}
+            fill="none"
+            stroke="#9ca3af"
+            strokeWidth="2"
+          />
         </g>
 
         {paski.map((p) => (
@@ -331,12 +341,12 @@ function FlagaSzkolofijska() {
       </defs>
 
       {/* maszt */}
-      <rect x="4" y="6" width="12" height={FLAGA_VIEWBOX_WYS - 12} rx="4" fill="#8a5a33" />
-      <circle cx="10" cy="10" r="12" fill="#d8b25c" stroke="#a9802f" strokeWidth="1.5" />
+      <rect x="8" y="14" width="10" height={FLAGA_VIEWBOX_WYS - 20} rx="4" fill="#8a5a33" />
+      <circle cx="13" cy="15" r="9" fill="#d8b25c" stroke="#a9802f" strokeWidth="1.5" />
       {/* uchwyty mocujące flagę do masztu (statyczne) */}
-      <circle cx="12" cy={FLAGA_Y + 20} r="4" fill="#a9802f" />
-      <circle cx="12" cy={FLAGA_Y + FLAGA_WYSOKOSC / 2} r="4" fill="#a9802f" />
-      <circle cx="12" cy={FLAGA_Y + FLAGA_WYSOKOSC - 20} r="4" fill="#a9802f" />
+      <circle cx="13" cy={FLAGA_Y + 20} r="4" fill="#a9802f" />
+      <circle cx="13" cy={FLAGA_Y + FLAGA_WYSOKOSC / 2} r="4" fill="#a9802f" />
+      <circle cx="13" cy={FLAGA_Y + FLAGA_WYSOKOSC - 20} r="4" fill="#a9802f" />
 
       {/* tkanina flagi pocięta na pasy, każdy łopocze z inną amplitudą i fazą */}
       {paski.map((p) => (
