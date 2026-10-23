@@ -61,8 +61,8 @@ export default function Medale() {
           {medale.map((m, i) => (
             <div
               key={i}
-              className="medal-card p-6 rounded-xl text-center shadow-md bg-white flex flex-col items-center"
-              style={{ animationDelay: m.delay }}
+              className="medal-card p-6 rounded-xl text-center shadow-md flex flex-col items-center"
+              style={{ animationDelay: m.delay, backgroundColor: "#b8b6b4" }}
             >
               <div className="medal-image-wrap w-32 h-32 mb-4 relative">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
