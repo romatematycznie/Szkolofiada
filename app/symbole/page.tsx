@@ -266,10 +266,14 @@ const FLAGA_WYSOKOSC = SYMBOL_WYSOKOSC;
 const FLAGA_VIEWBOX_SZER = FLAGA_X + FLAGA_SZEROKOSC + FLAGA_MARGINES;
 const FLAGA_VIEWBOX_WYS = FLAGA_Y + FLAGA_WYSOKOSC + FLAGA_MARGINES;
 
-const FLAGA_LICZBA_PASKOW: number = 14;
+// Dużo wąskich pasów = sąsiednie kolumny różnią się przesunięciem o ułamek
+// piksela, więc krawędzie (obrys, kółka) składają się w płynną krzywą
+// zamiast widocznych, "schodkowych" uskoków.
+const FLAGA_LICZBA_PASKOW: number = 60;
 const FLAGA_PASEK_SZEROKOSC = FLAGA_SZEROKOSC / FLAGA_LICZBA_PASKOW;
 const FLAGA_AMPLITUDA_MIN = 1.5; // px, przy maszcie - tkanina usztywniona
 const FLAGA_AMPLITUDA_MAX = 13; // px, na wolnym brzegu - najmocniejszy łopot
+const FLAGA_FALA_ROZPIETOSC_S = 1.1; // łączne opóźnienie fazy między pierwszym a ostatnim pasem
 const FLAGA_NADDATEK = Math.ceil(FLAGA_AMPLITUDA_MAX); // margines rysunku, by nie było prześwitów przy ruchu
 
 function FlagaSzkolofijska() {
@@ -280,7 +284,7 @@ function FlagaSzkolofijska() {
       i,
       x: FLAGA_X + i * FLAGA_PASEK_SZEROKOSC,
       amplituda,
-      opoznienie: i * 0.09,
+      opoznienie: postep * FLAGA_FALA_ROZPIETOSC_S,
     };
   });
 
