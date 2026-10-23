@@ -27,56 +27,89 @@ export default function Medale() {
 
   const medale = [
     {
+      numer: 1,
       miejsce: "I miejsce",
       opis: "Złoty medal",
       nagroda: "2 000 zł",
       src: "/images/medale/zloty.png",
       alt: "Złoty medal Szkolofiady 2027",
-      delay: "0ms",
+      gradient: "linear-gradient(160deg, #ffe49a 0%, #ffcc33 45%, #d79b1e 100%)",
+      stepClass: "podium-step-gold",
+      cardDelay: "450ms",
+      stepDelay: "150ms",
     },
     {
+      numer: 2,
       miejsce: "II miejsce",
       opis: "Srebrny medal",
       nagroda: null,
       src: "/images/medale/srebrny.png",
       alt: "Srebrny medal Szkolofiady 2027",
-      delay: "150ms",
+      gradient: "linear-gradient(160deg, #f1f1f1 0%, #c9c9c9 45%, #9b9b9b 100%)",
+      stepClass: "podium-step-silver",
+      cardDelay: "300ms",
+      stepDelay: "0ms",
     },
     {
+      numer: 3,
       miejsce: "III miejsce",
       opis: "Brązowy medal",
       nagroda: null,
       src: "/images/medale/brazowy.png",
       alt: "Brązowy medal Szkolofiady 2027",
-      delay: "300ms",
+      gradient: "linear-gradient(160deg, #e8b382 0%, #c87f41 45%, #93581f 100%)",
+      stepClass: "podium-step-bronze",
+      cardDelay: "600ms",
+      stepDelay: "300ms",
     },
   ];
+
+  // Kolejność wizualna na podium: srebro (lewo) – złoto (środek) – brąz (prawo)
+  const kolejnoscPodium = [medale[1], medale[0], medale[2]];
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-16">
       <h1 className="text-4xl font-bold mb-8" style={{ color: "var(--kolor-zolty)" }}>Medale i nagrody</h1>
 
       <section className="mb-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {medale.map((m, i) => (
-            <div
-              key={i}
-              className="medal-card p-6 rounded-xl text-center shadow-md flex flex-col items-center"
-              style={{ animationDelay: m.delay, backgroundColor: "#b8b6b4" }}
-            >
-              <div className="medal-image-wrap w-32 h-32 mb-4 relative">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={m.src}
-                  alt={m.alt}
-                  className="medal-image w-full h-full object-contain drop-shadow-lg"
-                />
+        <div className="podium-wrapper relative flex items-end justify-center gap-3 sm:gap-6 pt-6">
+          <div className="podium-spotlight" aria-hidden="true" />
+
+          {kolejnoscPodium.map((m) => (
+            <div key={m.numer} className="flex flex-col items-center w-24 sm:w-32 md:w-36">
+              <div
+                className="medal-card relative rounded-xl text-center shadow-md flex flex-col items-center px-3 py-5 sm:px-4 sm:py-6 w-full"
+                style={{ animationDelay: m.cardDelay, backgroundColor: "#d4d2d0" }}
+              >
+                {m.numer === 1 && (
+                  <div className="sparkles" aria-hidden="true">
+                    <span className="sparkle s1">✦</span>
+                    <span className="sparkle s2">✦</span>
+                    <span className="sparkle s3">✦</span>
+                    <span className="sparkle s4">✦</span>
+                  </div>
+                )}
+                <div className="medal-image-wrap w-16 h-16 sm:w-24 sm:h-24 md:w-28 md:h-28 mb-3 relative">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={m.src}
+                    alt={m.alt}
+                    className="medal-image w-full h-full object-contain drop-shadow-lg"
+                  />
+                </div>
+                <p className="font-bold text-sm sm:text-lg">{m.miejsce}</p>
+                {m.nagroda && (
+                  <p className="text-gray-700 font-bold text-xs sm:text-base mt-1">{m.nagroda}</p>
+                )}
+                <p className="text-gray-600 text-[11px] sm:text-sm mt-1">{m.opis}</p>
               </div>
-              <p className="font-bold text-xl">{m.miejsce}</p>
-              {m.nagroda && (
-                <p className="text-gray-700 font-bold text-lg mt-1">{m.nagroda}</p>
-              )}
-              <p className="text-gray-600 text-sm mt-1">{m.opis}</p>
+
+              <div
+                className={`podium-step ${m.stepClass} w-full rounded-t-lg flex items-start justify-center`}
+                style={{ background: m.gradient, animationDelay: m.stepDelay }}
+              >
+                <span className="podium-number">{m.numer}</span>
+              </div>
             </div>
           ))}
         </div>
@@ -135,19 +168,81 @@ export default function Medale() {
           }
         }
 
+        @keyframes stepRise {
+          0% {
+            opacity: 0;
+            transform: scaleY(0);
+          }
+          100% {
+            opacity: 1;
+            transform: scaleY(1);
+          }
+        }
+
+        @keyframes spotlightPulse {
+          0%,
+          100% {
+            opacity: 0.35;
+            transform: translateX(-50%) scale(1);
+          }
+          50% {
+            opacity: 0.6;
+            transform: translateX(-50%) scale(1.08);
+          }
+        }
+
+        @keyframes sparkleTwinkle {
+          0%,
+          100% {
+            opacity: 0;
+            transform: scale(0.4) rotate(0deg);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1) rotate(25deg);
+          }
+        }
+
+        .podium-wrapper {
+          min-height: 320px;
+        }
+
+        .podium-spotlight {
+          position: absolute;
+          top: -20px;
+          left: 50%;
+          width: 260px;
+          height: 260px;
+          background: radial-gradient(
+            circle,
+            rgba(255, 215, 110, 0.55) 0%,
+            rgba(255, 215, 110, 0.15) 45%,
+            transparent 70%
+          );
+          filter: blur(4px);
+          transform: translateX(-50%);
+          animation: spotlightPulse 3.5s ease-in-out infinite;
+          pointer-events: none;
+          z-index: 0;
+        }
+
         .medal-card {
           opacity: 0;
+          position: relative;
+          z-index: 2;
           animation: medalEntrance 0.6s ease-out forwards;
           transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .medal-card:hover {
           transform: translateY(-4px);
-          box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
         }
 
         .medal-image-wrap {
           overflow: hidden;
+          margin-left: auto;
+          margin-right: auto;
           animation: medalFloat 3.2s ease-in-out infinite;
         }
 
@@ -177,14 +272,89 @@ export default function Medale() {
           animation: medalShine 0.9s ease forwards;
         }
 
+        .podium-step {
+          position: relative;
+          z-index: 1;
+          opacity: 0;
+          transform-origin: bottom;
+          animation: stepRise 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          box-shadow: inset 0 3px 6px rgba(255, 255, 255, 0.4), inset 0 -4px 10px rgba(0, 0, 0, 0.25);
+        }
+
+        .podium-step-gold {
+          height: 130px;
+        }
+
+        .podium-step-silver {
+          height: 90px;
+        }
+
+        .podium-step-bronze {
+          height: 64px;
+        }
+
+        .podium-number {
+          margin-top: 10px;
+          font-weight: 800;
+          font-size: 1.75rem;
+          color: rgba(255, 255, 255, 0.85);
+          text-shadow: 0 2px 3px rgba(0, 0, 0, 0.35);
+        }
+
+        .sparkles {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          z-index: 3;
+        }
+
+        .sparkle {
+          position: absolute;
+          color: #ffe49a;
+          font-size: 0.9rem;
+          opacity: 0;
+          animation: sparkleTwinkle 2.2s ease-in-out infinite;
+        }
+
+        .sparkle.s1 {
+          top: 6%;
+          left: 10%;
+          animation-delay: 0.2s;
+        }
+
+        .sparkle.s2 {
+          top: 14%;
+          right: 8%;
+          animation-delay: 1s;
+          font-size: 0.7rem;
+        }
+
+        .sparkle.s3 {
+          bottom: 30%;
+          left: 4%;
+          animation-delay: 1.6s;
+          font-size: 0.65rem;
+        }
+
+        .sparkle.s4 {
+          top: 45%;
+          right: 2%;
+          animation-delay: 0.7s;
+          font-size: 0.8rem;
+        }
+
         @media (prefers-reduced-motion: reduce) {
           .medal-card,
           .medal-image-wrap,
-          .medal-image {
+          .medal-image,
+          .podium-step,
+          .podium-spotlight,
+          .sparkle {
             animation: none !important;
             transition: none !important;
           }
-          .medal-card {
+          .medal-card,
+          .podium-step {
             opacity: 1;
             transform: none;
           }
