@@ -72,13 +72,13 @@ export default function Medale() {
       <h1 className="text-4xl font-bold mb-8" style={{ color: "var(--kolor-zolty)" }}>Medale i nagrody</h1>
 
       <section className="mb-12">
-        <div className="podium-wrapper relative flex items-end justify-center gap-3 sm:gap-6 pt-6">
+        <div className="podium-wrapper relative flex items-end justify-center gap-4 sm:gap-8 pt-8">
           <div className="podium-spotlight" aria-hidden="true" />
 
           {kolejnoscPodium.map((m) => (
-            <div key={m.numer} className="flex flex-col items-center w-24 sm:w-32 md:w-36">
+            <div key={m.numer} className="flex flex-col items-center w-32 sm:w-44 md:w-52">
               <div
-                className="medal-card relative rounded-xl text-center shadow-md flex flex-col items-center px-3 py-5 sm:px-4 sm:py-6 w-full"
+                className="medal-card relative rounded-xl text-center shadow-md flex flex-col items-center px-4 py-6 sm:px-6 sm:py-8 w-full"
                 style={{ animationDelay: m.cardDelay, backgroundColor: "#d4d2d0" }}
               >
                 {m.numer === 1 && (
@@ -89,7 +89,7 @@ export default function Medale() {
                     <span className="sparkle s4">✦</span>
                   </div>
                 )}
-                <div className="medal-image-wrap w-16 h-16 sm:w-24 sm:h-24 md:w-28 md:h-28 mb-3 relative">
+                <div className="medal-image-wrap w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 mb-3 relative">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={m.src}
@@ -97,11 +97,11 @@ export default function Medale() {
                     className="medal-image w-full h-full object-contain drop-shadow-lg"
                   />
                 </div>
-                <p className="font-bold text-sm sm:text-lg">{m.miejsce}</p>
+                <p className="font-bold text-base sm:text-xl">{m.miejsce}</p>
                 {m.nagroda && (
-                  <p className="text-gray-700 font-bold text-xs sm:text-base mt-1">{m.nagroda}</p>
+                  <p className="text-gray-700 font-bold text-sm sm:text-lg mt-1">{m.nagroda}</p>
                 )}
-                <p className="text-gray-600 text-[11px] sm:text-sm mt-1">{m.opis}</p>
+                <p className="text-gray-600 text-xs sm:text-base mt-1">{m.opis}</p>
               </div>
 
               <div
@@ -204,15 +204,15 @@ export default function Medale() {
         }
 
         .podium-wrapper {
-          min-height: 320px;
+          min-height: 440px;
         }
 
         .podium-spotlight {
           position: absolute;
           top: -20px;
           left: 50%;
-          width: 260px;
-          height: 260px;
+          width: 360px;
+          height: 360px;
           background: radial-gradient(
             circle,
             rgba(255, 215, 110, 0.55) 0%,
@@ -282,21 +282,21 @@ export default function Medale() {
         }
 
         .podium-step-gold {
-          height: 130px;
+          height: 180px;
         }
 
         .podium-step-silver {
-          height: 90px;
+          height: 125px;
         }
 
         .podium-step-bronze {
-          height: 64px;
+          height: 90px;
         }
 
         .podium-number {
-          margin-top: 10px;
+          margin-top: 14px;
           font-weight: 800;
-          font-size: 1.75rem;
+          font-size: 2.5rem;
           color: rgba(255, 255, 255, 0.85);
           text-shadow: 0 2px 3px rgba(0, 0, 0, 0.35);
         }
